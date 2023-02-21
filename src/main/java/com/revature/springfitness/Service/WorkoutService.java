@@ -21,37 +21,60 @@ public class WorkoutService {
     public WorkoutService(WorkoutRepository workoutRepository){
         this.workoutRepository = workoutRepository;
     }
-
     /**
-     * Use the findAll method, which is provided by all JPARepositories, to get all workouts.
+     * Use the findAll method, which is provided by all Spring Data JPARepositories, to get all workouts.
      * @return all workouts
      */
     public List<Workout> getAllWorkout(){
         return workoutRepository.findAll();
     }
-
     /**
-     * Use the save method, which is provided by all JPARepositorues, to save a workout.
+     * Use the save method, which is provided by all Spring Data JPARepositories, to save a workout.
      * @param workout a transient (unpersisted) workout Entity
      * @return a persistent (connected with the database) workout entity
      */
     public Workout addWorkout(Workout workout){
         return workoutRepository.save(workout);
     }
+    /**
+     * Use the findById method, which is provided by all Spring Data JPARepositories, to retrieve a workout by its ID.
+     * @param id id of a Workout entity
+     * @return a persistent (connected with the database) workout entity
+     */
     public Workout getWorkoutById(long id){
         Optional<Workout> workoutOptional = workoutRepository.findById(id);
         return workoutOptional.get();
     }
+    /**
+     * Use the workout entity to retrieve the plans of a workout. Because Workout is a JPA entity managed by Spring Data,
+     * using the getter method to retrieve a Workout's plans will automatically retrieve associated Plan entities.
+     *
+     * @param id the id of a Workout entity
+     * @return all Plan entities associated with the Workout entity
+     */
     public List<Plan> getWorkoutPlans(long id){
         Workout workout = getWorkoutById(id);
         return workout.getPlans();
     }
+
+    /**
+     * Use the remove method, which is provided by all Spring Data JPARepositories, to delete an entity.
+     * @param id the id of a Workout entity
+     * @return the workout entity which has been deleted from the database
+     */
     public Workout deleteWorkout(long id){
         Optional<Workout> workoutOptional = workoutRepository.findById(id);
         Workout workout = workoutOptional.get();
         workoutRepository.delete(workout);
         return workout;
     }
+
+    /**
+     * Use the save method, which is provided by all Spring Data JPARepositories, to save changes made to an entity.
+     * @param id the id of a Workout entity
+     * @param newWorkout a Workout object containing only the fields to be updated (title)
+     * @return the persistent & updated Workout object
+     */
     public Workout updateWorkoutTitle(long id, Workout newWorkout){
         Optional<Workout> workoutOptional = workoutRepository.findById(id);
         Workout workout = workoutOptional.get();
