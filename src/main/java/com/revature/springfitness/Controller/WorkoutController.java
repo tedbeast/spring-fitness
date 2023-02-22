@@ -29,8 +29,26 @@ public class WorkoutController {
     /**
      * Endpoint on GET localhost:8080/workout should respond with a JSON containing all workouts.
      * For instance, GET localhost:8080/workout could respond with
-     * [{}, {}]
-     * @return
+     * [{
+     *     "workoutId":1,
+     *     "title":"run a mile"
+     *     "plans":[{
+     *                  "planId":1,
+     *                  "reps":2
+     *              },
+     *              {
+     *                  "planId":2,
+     *                  "reps":4
+     *              }]
+     * }, {
+     *     "workoutId":2,
+     *     "title":"pushups"
+     *     "plans":[{
+     *                  "planId":3,
+     *                  "reps":20
+     *              }]
+     * }]
+     * @return all workout entities
      */
     @GetMapping("workout")
     public List<Workout> getAllWorkout(){
@@ -39,9 +57,15 @@ public class WorkoutController {
     /**
      * Endpoint on POST localhost:8080/workout should add a new workout and respond with a JSON of the added workout
      * For instance, POST localhost:8080/workout containing
-     * {}
+     * {
+     *     "title":"run a mile"
+     * }
      * should insert the workout and respond with
-     * {}
+     * {
+     *     "workoutId":1,
+     *     "title":"run a mile"
+     *     "plans":[]
+     * }
      */
     @PostMapping("workout")
     public Workout postWorkout(@RequestBody Workout workout){
@@ -50,7 +74,18 @@ public class WorkoutController {
     /**
      * Endpoint on GET localhost:8080/workout/{id} should respond with a JSON containing all workouts.
      * For instance, GET localhost:8080/workout/1 could respond with
-     * {}
+     * {
+     *     "workoutId":1,
+     *     "title":"run a mile"
+     *     "plans":[{
+     *                  "planId":1,
+     *                  "reps":1
+     *              },
+     *              {
+     *                  "planId":2,
+     *                  "reps":4
+     *              }]
+     * }
      */
     @GetMapping("workout/{id}")
     public Workout getWorkoutById(@PathVariable long id){
@@ -59,7 +94,14 @@ public class WorkoutController {
     /**
      * Endpoint on GET localhost:8080/workout/{id}/plan should respond with a JSON of the plans of a workout.
      * For instance, GET localhost:8080/workout/1/plan should respond with
-     * [{},{}]
+     * [{
+     *      "planId":1,
+     *      "reps":1
+     *  },
+     *  {
+     *      "planId":1,
+     *      "reps":4
+     *  }]
      */
     @GetMapping("workout/{id}/plan")
     public List<Plan> getWorkoutPlans(@PathVariable long id){
@@ -68,7 +110,18 @@ public class WorkoutController {
     /**
      * Endpoint on DELETE localhost:8080/workout/{id} should delete the workout and respond with the deleted workout.
      * For instance, DELETE localhost:8080/workout/1 should delete the workout and respond with
-     * {}
+     * {
+     *     "workoutId":1,
+     *     "title":"run a mile"
+     *     "plans":[{
+     *                  "planId":1,
+     *                  "reps":1
+     *              },
+     *              {
+     *                  "planId":1,
+     *                  "reps":4
+     *              }]
+     * }
      */
     @DeleteMapping("workout/{id}")
     public Workout deleteWorkout(@PathVariable long id){
@@ -77,9 +130,22 @@ public class WorkoutController {
     /**
      * Endpoint on PATCH localhost:8080/workout/{id} should update the workout title and respond with the updated workout.
      * For instance, PATCH localhost:8080/workout/1 with the request body
-     * {}
+     * {
+     *      "title":"jog a mile"
+     * }
      * should update the workout and respond with
-     * {}
+     * {
+     *     "workoutId":1,
+     *     "title":"jog a mile"
+     *     "plans":[{
+     *                  "planId":1,
+     *                  "reps":1
+     *              },
+     *              {
+     *                  "planId":1,
+     *                  "reps":4
+     *              }]
+     * }
      */
     @PatchMapping("workout/{id}")
     public Workout deleteWorkout(@PathVariable long id, @RequestBody Workout workout){

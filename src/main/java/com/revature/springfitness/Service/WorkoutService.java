@@ -1,5 +1,6 @@
 package com.revature.springfitness.Service;
 
+import com.revature.springfitness.Application;
 import com.revature.springfitness.Model.Plan;
 import com.revature.springfitness.Model.Workout;
 import com.revature.springfitness.Repository.WorkoutRepository;
@@ -20,13 +21,16 @@ public class WorkoutService {
     @Autowired
     public WorkoutService(WorkoutRepository workoutRepository){
         this.workoutRepository = workoutRepository;
+        Application.log.info("WorkoutService: Autowired the WorkoutService class - ready to go");
     }
     /**
      * Use the findAll method, which is provided by all Spring Data JPARepositories, to get all workouts.
      * @return all workouts
      */
     public List<Workout> getAllWorkout(){
-        return workoutRepository.findAll();
+        List<Workout> workoutList = workoutRepository.findAll();
+        Application.log.info("WorkoutService: returning all workouts: "+workoutList);
+        return workoutList;
     }
     /**
      * Use the save method, which is provided by all Spring Data JPARepositories, to save a workout.
@@ -34,15 +38,21 @@ public class WorkoutService {
      * @return a persistent (connected with the database) workout entity
      */
     public Workout addWorkout(Workout workout){
-        return workoutRepository.save(workout);
+        Workout persistedWorkout = workoutRepository.save(workout);
+        Application.log.info("WorkoutService: saving a workout: "+workout);
+        return persistedWorkout;
     }
     /**
      * Use the findById method, which is provided by all Spring Data JPARepositories, to retrieve a workout by its ID.
+     * The JPARepository returns an Optional when using findById, because it is unknown whether the Workout actually
+     * exists.
      * @param id id of a Workout entity
      * @return a persistent (connected with the database) workout entity
      */
     public Workout getWorkoutById(long id){
         Optional<Workout> workoutOptional = workoutRepository.findById(id);
+        Workout workout = workoutOptional.get();
+        Application.log.info("WorkoutService: Getting workout by ID: "+id+", "+workout);
         return workoutOptional.get();
     }
     /**
@@ -54,11 +64,14 @@ public class WorkoutService {
      */
     public List<Plan> getWorkoutPlans(long id){
         Workout workout = getWorkoutById(id);
-        return workout.getPlans();
+        List<Plan> plans = workout.getPlans();
+        Application.log.info("WorkoutService: Getting plans of workout id: "+id+", "+plans);
+        return plans;
     }
-
     /**
      * Use the remove method, which is provided by all Spring Data JPARepositories, to delete an entity.
+     * The JPARepository returns an Optional when using findById, because it is unknown whether the Workout actually
+     * exists.
      * @param id the id of a Workout entity
      * @return the workout entity which has been deleted from the database
      */
@@ -66,11 +79,13 @@ public class WorkoutService {
         Optional<Workout> workoutOptional = workoutRepository.findById(id);
         Workout workout = workoutOptional.get();
         workoutRepository.delete(workout);
+        Application.log.info("WorkoutService: deleting workout of ID: "+id+" which was: "+workout);
         return workout;
     }
-
     /**
      * Use the save method, which is provided by all Spring Data JPARepositories, to save changes made to an entity.
+     * The JPARepository returns an Optional when using findById, because it is unknown whether the Workout actually
+     * exists.
      * @param id the id of a Workout entity
      * @param newWorkout a Workout object containing only the fields to be updated (title)
      * @return the persistent & updated Workout object
@@ -80,6 +95,7 @@ public class WorkoutService {
         Workout workout = workoutOptional.get();
         workout.setTitle(newWorkout.getTitle());
         workoutRepository.save(workout);
+        Application.log.info("Updated workout of ID: "+id+", which is now: "+workout);
         return workout;
     }
 }
