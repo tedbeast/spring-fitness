@@ -36,6 +36,7 @@ public class Workout {
      * this class, it will be a List of real Plan entities connected with the database.
      */
     @OneToMany
+
     private List<Plan> plans;
 
     public long getId() {
