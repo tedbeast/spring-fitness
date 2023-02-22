@@ -15,6 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PlanController {
     PlanService planService;
+
+    /**
+     * Constructor injection
+     * @param planService a PlanService bean that will be autowired into this class from the Spring IOC container
+     */
     @Autowired
     public PlanController(PlanService planService){
         this.planService = planService;

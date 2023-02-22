@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
+import java.util.Objects;
+
 /**
  * The @Entity annotation informs Spring Data to map this object to a database table as part of a paradigm known as
  * 'object-relational-mapping'. By default, the Table and Column names should match the Class and Field names, but this
@@ -12,6 +14,9 @@ import java.util.List;
  * even create and modify tables for you, although this would not likely be done on real projects. See the
  * application.properties file in the resources folder for more info. Spring ORM Entities leverage the Hibernate
  * framework - you may see Hibernate when reading Stack traces or researching documentation.
+ *
+ * For the purpose of completing any challenges within this project: do not change anything within this class!
+ * It is already complete.
  */
 @Entity
 public class Plan {
@@ -34,4 +39,60 @@ public class Plan {
      */
     @ManyToOne
     private Workout workout;
+
+    public Plan(){
+
+    }
+
+    public Plan(long planId, int numberOfReps, Workout workout) {
+        this.planId = planId;
+        this.numberOfReps = numberOfReps;
+        this.workout = workout;
+    }
+
+    public long getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(long planId) {
+        this.planId = planId;
+    }
+
+    public int getNumberOfReps() {
+        return numberOfReps;
+    }
+
+    public void setNumberOfReps(int numberOfReps) {
+        this.numberOfReps = numberOfReps;
+    }
+
+    public Workout getWorkout() {
+        return workout;
+    }
+
+    public void setWorkout(Workout workout) {
+        this.workout = workout;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Plan plan = (Plan) o;
+        return planId == plan.planId && numberOfReps == plan.numberOfReps && Objects.equals(workout, plan.workout);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(planId, numberOfReps, workout);
+    }
+
+    @Override
+    public String toString() {
+        return "Plan{" +
+                "planId=" + planId +
+                ", numberOfReps=" + numberOfReps +
+                ", workout=" + workout +
+                '}';
+    }
 }

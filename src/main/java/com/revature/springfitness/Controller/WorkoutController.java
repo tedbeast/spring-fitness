@@ -14,13 +14,16 @@ import java.util.List;
  * be used to create web endpoints. The @RestController annotation exhibits all the behavior of @Controller, but it
  * also includes the behavior of @ResponseBody, which automatically converts the Objects that are returned by the
  * endpoint methods into JSON response bodies.
+ *
+ * For the purpose of completing any challenges within this project: do not change anything within this class!
+ * It is already complete.
  */
 @RestController
 public class WorkoutController {
     WorkoutService workoutService;
     /**
-     * Autowire a workoutService into this class via Constructor injection.
-     * @param workoutService WorkoutService bean
+     * Constructor injection
+     * @param workoutService a PlanService bean that will be autowired into this class from the Spring IOC container
      */
     @Autowired
     public WorkoutController(WorkoutService workoutService){

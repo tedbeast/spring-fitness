@@ -12,6 +12,9 @@ import java.util.Objects;
  * even create and modify tables for you, although this would not likely be done on real projects. See the
  * application.properties file in the resources folder for more info. Spring ORM Entities leverage the Hibernate
  * framework - you may see Hibernate when reading Stack traces or researching documentation.
+ *
+ * For the purpose of completing any challenges within this project: do not change anything within this class!
+ * It is already complete.
  */
 @Entity
 public class Workout {
